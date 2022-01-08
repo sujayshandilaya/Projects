@@ -1,3 +1,6 @@
+#https://ruslanmv.com/blog/Real-Time-Data-Analysis-with-Kinesis-in-EC2
+#https://towardsdatascience.com/how-to-create-a-dataset-with-twitter-and-cloud-computing-fcd82837d313
+
 from tweepy.streaming import Stream
 from tweepy import OAuthHandler
 from tweepy import Stream
@@ -20,7 +23,6 @@ class StdOutListener(Stream):
     def on_data(self, data):
 
         tweet = json.loads(data)
-        
         if 'extended_tweet' in tweet.keys():
             message_dict= { 'id' : str(tweet['id']),
                         'name' : str(tweet['user']['name']),
@@ -28,9 +30,7 @@ class StdOutListener(Stream):
                         'followers_count' : str(tweet['user']['followers_count']),
                         'location' : str(tweet['user']['location']),
                         'hashtags' : tweet['entities']['hashtags']
-                        }      
-        
-        
+                        }
         else:
             message_dict={ 'id' : str(tweet['id']),
                         'name' : str(tweet['user']['name']),
